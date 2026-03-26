@@ -1,24 +1,24 @@
 
-#Smart Traffic Management System
+Smart Traffic Management System
 
-##Description
+Description
 This project uses graph algorithms to optimize traffic routing.
 
-##Algorithms Used
-- Dijkstra’s Algorithm
-- Floyd-Warshall Algorithm
+Algorithms Used
+Dijkstra’s Algorithm
+Floyd-Warshall Algorithm
 
-##Features
-- Shortest path calculation
-- Alternative route detection
-- Dynamic traffic updates
+Features
+Shortest path calculation
+Alternative route detection
+Dynamic traffic updates
 
-##Concepts
-- Graph Representation
-- Time & Space Complexity Analysis
+Concepts
+Graph Representation
+Time & Space Complexity Analysis
 
-##How to Run
-1. Compile:
+How to Run
+Compile:
    javac *.java
-2. Run:
+Run:
    java TrafficSystem

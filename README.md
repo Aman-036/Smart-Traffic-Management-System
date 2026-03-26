@@ -16,9 +16,3 @@ Dynamic traffic updates
 Concepts
 Graph Representation
 Time & Space Complexity Analysis
-
-How to Run
-Compile:
-   javac *.java
-Run:
-   java TrafficSystem

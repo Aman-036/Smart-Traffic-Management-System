@@ -6,8 +6,6 @@ public class TrafficSystem {
 
         Scanner sc = new Scanner(System.in);
         Graph graph = new Graph();
-
-        // 🔹 Dynamic Graph Input
         System.out.print("Enter number of edges: ");
         int edges = sc.nextInt();
 
@@ -19,12 +17,8 @@ public class TrafficSystem {
 
             graph.addEdge(u, v, w);
         }
-
-        // 🔹 Source input
         System.out.print("\nEnter source node: ");
         String source = sc.next();
-
-        // 🔹 Run Dijkstra
         Map<String, Integer> dist = Dijkstra.shortestPath(graph, source);
 
         System.out.println("\nShortest distances from " + source + ":");
@@ -32,30 +26,21 @@ public class TrafficSystem {
             System.out.println(node + " -> " + dist.get(node));
         }
 
-        // 🔹 Dynamic Traffic Update
         System.out.print("\nDo you want to update traffic? (yes/no): ");
         String choice = sc.next();
 
         if (choice.equalsIgnoreCase("yes")) {
-
             System.out.print("Enter edge to update (u v newWeight): ");
             String u = sc.next();
             String v = sc.next();
             int newWeight = sc.nextInt();
-
-            // Update weight
-            for (Edge e : graph.adjList.get(u)) {
-                if (e.destination.equals(v)) {
-                    e.weight = newWeight;
-                }
-            }
-
-            // Re-run Dijkstra
-            dist = Dijkstra.shortestPath(graph, source);
+            graph.updateTraffic(u, v, newWeight);
+            System.out.println("\nTraffic updated successfully!");
+            Map<String, Integer> updatedDist = Dijkstra.shortestPath(graph, source);
 
             System.out.println("\nAfter traffic update:");
-            for (String node : dist.keySet()) {
-                System.out.println(node + " -> " + dist.get(node));
+            for (String node : updatedDist.keySet()) {
+                System.out.println(node + " -> " + updatedDist.get(node));
             }
         }
 

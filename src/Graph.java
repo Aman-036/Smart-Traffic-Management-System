@@ -8,10 +8,8 @@ class Graph {
         adjList.putIfAbsent(dest, new ArrayList<>());
 
         adjList.get(src).add(new Edge(dest, weight));
-        adjList.get(dest).add(new Edge(src, weight)); // Undirected
+        adjList.get(dest).add(new Edge(src, weight)); 
     }
-
-    // ✅ Proper traffic update (both directions)
     void updateTraffic(String u, String v, int newWeight) {
         for (Edge e : adjList.get(u)) {
             if (e.destination.equals(v)) {

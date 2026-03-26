@@ -6,6 +6,8 @@ public class TrafficSystem {
 
         Scanner sc = new Scanner(System.in);
         Graph graph = new Graph();
+
+        // Input graph
         System.out.print("Enter number of edges: ");
         int edges = sc.nextInt();
 
@@ -14,34 +16,47 @@ public class TrafficSystem {
             String u = sc.next();
             String v = sc.next();
             int w = sc.nextInt();
-
             graph.addEdge(u, v, w);
         }
-        System.out.print("\nEnter source node: ");
+
+        // Source & destination
+        System.out.print("\nEnter source: ");
         String source = sc.next();
-        Map<String, Integer> dist = Dijkstra.shortestPath(graph, source);
 
-        System.out.println("\nShortest distances from " + source + ":");
-        for (String node : dist.keySet()) {
-            System.out.println(node + " -> " + dist.get(node));
-        }
+        System.out.print("Enter destination: ");
+        String dest = sc.next();
 
-        System.out.print("\nDo you want to update traffic? (yes/no): ");
+        // Dijkstra
+        Map<String, String> parent = new HashMap<>();
+        Map<String, Integer> dist = Dijkstra.shortestPath(graph, source, parent);
+
+        System.out.println("\nShortest distance: " + dist.get(dest));
+
+        List<String> path = PathUtil.getPath(parent, dest);
+        System.out.println("Path: " + String.join(" -> ", path));
+
+        // Traffic update
+        System.out.print("\nUpdate traffic?: ");
         String choice = sc.next();
 
         if (choice.equalsIgnoreCase("yes")) {
-            System.out.print("Enter edge to update (u v newWeight): ");
+
+            System.out.print("Enter edge: ");
             String u = sc.next();
             String v = sc.next();
             int newWeight = sc.nextInt();
+
             graph.updateTraffic(u, v, newWeight);
-            System.out.println("\nTraffic updated successfully!");
-            Map<String, Integer> updatedDist = Dijkstra.shortestPath(graph, source);
+
+            // Re-run Dijkstra
+            parent.clear();
+            dist = Dijkstra.shortestPath(graph, source, parent);
 
             System.out.println("\nAfter traffic update:");
-            for (String node : updatedDist.keySet()) {
-                System.out.println(node + " -> " + updatedDist.get(node));
-            }
+            System.out.println("New distance: " + dist.get(dest));
+
+            List<String> newPath = PathUtil.getPath(parent, dest);
+            System.out.println("New Path: " + String.join(" -> ", newPath));
         }
 
         sc.close();

@@ -2,13 +2,17 @@ import java.util.*;
 
 class Dijkstra {
 
-    public static Map<String, Integer> shortestPath(Graph graph, String start) {
+    public static Map<String, Integer> shortestPath(
+            Graph graph,
+            String start,
+            Map<String, String> parent
+    ) {
 
         Map<String, Integer> dist = new HashMap<>();
-        Map<String, String> parent = new HashMap<>();
 
         for (String node : graph.adjList.keySet()) {
             dist.put(node, Integer.MAX_VALUE);
+            parent.put(node, null);
         }
 
         dist.put(start, 0);

@@ -1,35 +1,64 @@
+import java.util.*;
+
 public class TrafficSystem {
 
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
         Graph graph = new Graph();
 
-        graph.addEdge("A", "B", 5);
-        graph.addEdge("A", "C", 3);
-        graph.addEdge("B", "D", 2);
-        graph.addEdge("C", "D", 4);
+        // 🔹 Dynamic Graph Input
+        System.out.print("Enter number of edges: ");
+        int edges = sc.nextInt();
 
-        // Dijkstra
-        Map<String, Integer> dist = Dijkstra.shortestPath(graph, "A");
+        for (int i = 0; i < edges; i++) {
+            System.out.print("Enter source destination weight: ");
+            String u = sc.next();
+            String v = sc.next();
+            int w = sc.nextInt();
 
-        System.out.println("Shortest distances from A:");
+            graph.addEdge(u, v, w);
+        }
+
+        // 🔹 Source input
+        System.out.print("\nEnter source node: ");
+        String source = sc.next();
+
+        // 🔹 Run Dijkstra
+        Map<String, Integer> dist = Dijkstra.shortestPath(graph, source);
+
+        System.out.println("\nShortest distances from " + source + ":");
         for (String node : dist.keySet()) {
             System.out.println(node + " -> " + dist.get(node));
         }
 
-        // Simulate traffic update
-        System.out.println("\nUpdating traffic...");
-        for (Edge e : graph.adjList.get("A")) {
-            if (e.destination.equals("B")) {
-                e.weight = 10; // congestion increased
+        // 🔹 Dynamic Traffic Update
+        System.out.print("\nDo you want to update traffic? (yes/no): ");
+        String choice = sc.next();
+
+        if (choice.equalsIgnoreCase("yes")) {
+
+            System.out.print("Enter edge to update (u v newWeight): ");
+            String u = sc.next();
+            String v = sc.next();
+            int newWeight = sc.nextInt();
+
+            // Update weight
+            for (Edge e : graph.adjList.get(u)) {
+                if (e.destination.equals(v)) {
+                    e.weight = newWeight;
+                }
+            }
+
+            // Re-run Dijkstra
+            dist = Dijkstra.shortestPath(graph, source);
+
+            System.out.println("\nAfter traffic update:");
+            for (String node : dist.keySet()) {
+                System.out.println(node + " -> " + dist.get(node));
             }
         }
 
-        dist = Dijkstra.shortestPath(graph, "A");
-
-        System.out.println("\nAfter traffic update:");
-        for (String node : dist.keySet()) {
-            System.out.println(node + " -> " + dist.get(node));
-        }
+        sc.close();
     }
 }

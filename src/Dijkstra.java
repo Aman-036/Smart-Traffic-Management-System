@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Dijkstra {
 
     public static Map<String, Integer> shortestPath(Graph graph, String start) {
@@ -12,7 +14,7 @@ class Dijkstra {
         dist.put(start, 0);
 
         PriorityQueue<String> pq = new PriorityQueue<>(
-            Comparator.comparingInt(dist::get)
+                Comparator.comparingInt(dist::get)
         );
 
         pq.add(start);
